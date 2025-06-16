@@ -3,69 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shop QR Landing</title>
+  <title>Shop QR Summary</title>
   <style>
     body {
       background-color: #000;
       color: #fff;
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 100vh;
+      padding: 20px;
       text-align: center;
     }
 
     h1 {
-      margin-top: 60px;
+      margin-top: 30px;
       font-size: 2rem;
       background: linear-gradient(45deg, #00f0ff, #ff00ff, #00ff80);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      font-weight: bold;
     }
 
-    .content {
+    .info {
+      margin: 20px auto;
+      max-width: 500px;
+      text-align: left;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      background-color: #111;
       padding: 20px;
-      max-width: 90%;
+      border-radius: 12px;
     }
 
     .qr-image {
       max-width: 300px;
-      width: 90%;
-      margin: 30px auto 10px;
-      border: 3px solid #444;
-      border-radius: 12px;
+      margin: 20px auto;
+      border-radius: 10px;
+      border: 2px solid #555;
     }
 
     footer {
       font-size: 0.9rem;
       color: #999;
-      margin-bottom: 15px;
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
 
-  <div class="content">
-    <h1>📌 Details of Shop with QR</h1>
+  <h1>✅ Shop Submission Summary</h1>
 
-    <!-- You can change this image source below -->
-    <img src="https://via.placeholder.com/300x300?text=QR+Photo" alt="QR Code" class="qr-image" />
-  </div>
+  <div class="info" id="formDataDisplay"></div>
+
+  <img id="qrImage" class="qr-image" alt="QR Code" />
 
   <footer>
     &copy; <script>document.write(new Date().getFullYear())</script> abhinnabehuria@outlook.com
   </footer>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem('shopFormData') || '{}');
+    const image = localStorage.getItem('uploadedImage');
+
+    if (Object.keys(data).length > 0) {
+      document.getElementById('formDataDisplay').innerHTML = `
+        <strong>🏪 Shop Name:</strong> ${data.shopName}<br>
+        <strong>👤 Owner Name:</strong> ${data.ownerName}<br>
+        <strong>📞 Mobile:</strong> ${data.mobile}<br>
+        <strong>📧 Email:</strong> ${data.email || 'N/A'}<br>
+        <strong>📍 Location:</strong> ${data.location}
+      `;
+    }
+
+    if (image) {
+      document.getElementById('qrImage').src = image;
+    }
+  </script>
 
 </body>
 </html>
