@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop QR Landing</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 60px;
+      font-size: 2rem;
+      background: linear-gradient(45deg, #00f0ff, #ff00ff, #00ff80);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 20px;
+      max-width: 90%;
+    }
+
+    .qr-image {
+      max-width: 300px;
+      width: 90%;
+      margin: 30px auto 10px;
+      border: 3px solid #444;
+      border-radius: 12px;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #999;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <h1>📌 Details of Shop with QR</h1>
+
+    <!-- You can change this image source below -->
+    <img src="https://via.placeholder.com/300x300?text=QR+Photo" alt="QR Code" class="qr-image" />
+  </div>
+
+  <footer>
+    &copy; <script>document.write(new Date().getFullYear())</script> abhinnabehuria@outlook.com
+  </footer>
+
+</body>
+</html>
