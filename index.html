@@ -189,7 +189,7 @@
     setInterval(updateTime, 1000);
     updateTime();
 
-    // QR Image Resize + Save
+    // QR Image Resize + Save + Redirect
     document.getElementById('shopForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const fileInput = document.getElementById('qrPhoto');
@@ -217,7 +217,7 @@
             const resizedData = canvas.toDataURL('image/jpeg', 0.7);
 
             localStorage.setItem('uploadedImage', resizedData);
-            alert('✅ Form submitted and QR photo saved!');
+            window.location.href = "shop-details-submitted.html"; // Redirect here
           };
           img.src = e.target.result;
         };
