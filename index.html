@@ -1,4 +1,3 @@
-<!-- upload.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,26 +6,29 @@
 </head>
 <body>
   <h2>📤 Upload Photo</h2>
-  <form action="show.html" method="get" enctype="multipart/form-data" onsubmit="return saveImage()">
+  <form id="uploadForm">
     <input type="file" id="photo" accept="image/*" required><br><br>
     <button type="submit">Upload & View</button>
   </form>
 
   <script>
-    function saveImage() {
+    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent form from submitting normally
+
       const fileInput = document.getElementById('photo');
       const file = fileInput.files[0];
+
       if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
           localStorage.setItem('uploadedImage', e.target.result);
+          window.location.href = "show.html"; // Redirect after saving
         };
         reader.readAsDataURL(file);
-        return true;
+      } else {
+        alert("Please select a photo.");
       }
-      alert("Please select a photo.");
-      return false;
-    }
+    });
   </script>
 </body>
 </html>
