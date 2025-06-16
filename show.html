@@ -1,0 +1,21 @@
+<!-- show.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Show Photo</title>
+</head>
+<body>
+  <h2>🖼️ Uploaded Photo</h2>
+  <img id="preview" src="" alt="No image found" style="max-width: 300px; border: 1px solid #ccc; padding: 5px;">
+
+  <script>
+    const imgData = localStorage.getItem('uploadedImage');
+    if (imgData) {
+      document.getElementById('preview').src = imgData;
+    } else {
+      document.getElementById('preview').alt = "No image available. Please upload first.";
+    }
+  </script>
+</body>
+</html>
