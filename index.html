@@ -2,111 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Shop Details</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop QR Upload</title>
   <style>
-    body {
-      background-color: #1a1a1a;
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
-    form {
-      background-color: #000;
-      padding: 20px;
-      border-radius: 12px;
-      width: 92%;
-      max-width: 420px;
-      margin-top: auto;
-    }
-    h2 {
-      text-align: center;
-      color: #00ffcc;
-      font-size: 1.5rem;
-      margin: 10px 0;
-    }
-    label {
-      font-size: 0.95rem;
-      display: block;
-      margin-bottom: 10px;
-    }
-    input[type="text"],
-    input[type="tel"],
-    input[type="email"],
-    textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 8px;
-      border: none;
-      background-color: #111;
-      color: white;
-      font-size: 1rem;
-    }
-    input[type="file"] {
-      margin-top: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 15px;
-      background-color: #00cc99;
-      color: black;
-      font-weight: bold;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #009977;
-    }
-    footer {
-      text-align: center;
-      color: #888;
-      font-size: 0.9rem;
-      margin: 20px 0;
-    }
+    body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
+    form { max-width: 400px; margin: auto; background: #222; padding: 20px; border-radius: 10px; }
+    label, input, button { display: block; width: 100%; margin: 10px 0; }
+    input, button { padding: 10px; border: none; border-radius: 6px; }
+    button { background: #00cc99; color: #000; font-weight: bold; cursor: pointer; }
   </style>
 </head>
 <body>
+
   <form id="shopForm">
-    <h2>🏪 Shop Details</h2>
-
-    <label>🏪 Shop Name:
-      <input type="text" name="shopName" required />
-    </label>
-
-    <label>👤 Owner Name:
-      <input type="text" name="ownerName" required />
-    </label>
-
-    <label>📞 Mobile Number:
-      <input type="tel" name="mobile" pattern="[0-9]{10}" required />
-    </label>
-
-    <label>📧 Email:
-      <input type="email" name="email" />
-    </label>
-
-    <label>📍 Location:
-      <textarea name="location" rows="3" required></textarea>
-    </label>
-
-    <label>📷 Upload QR Photo:
-      <input type="file" id="qrPhoto" accept="image/*" required />
-    </label>
-
-    <button type="submit">🎉 Submit</button>
+    <label>Shop Name: <input type="text" name="shopName" required></label>
+    <label>Owner Name: <input type="text" name="ownerName" required></label>
+    <label>Mobile Number: <input type="tel" name="mobile" pattern="[0-9]{10}" required></label>
+    <label>Location: <input type="text" name="location" required></label>
+    <label>Upload QR Photo: <input type="file" id="qrPhoto" accept="image/*" required></label>
+    <button type="submit">Submit</button>
   </form>
-
-  <footer>
-    &copy; <script>document.write(new Date().getFullYear())</script> abhinnabehuria@outlook.com
-  </footer>
 
   <script>
     document.getElementById('shopForm').addEventListener('submit', function (e) {
@@ -114,34 +28,35 @@
 
       const fileInput = document.getElementById('qrPhoto');
       const file = fileInput.files[0];
-
       if (!file) return alert("Please upload a QR photo.");
 
       const reader = new FileReader();
       reader.onloadend = function () {
         const base64Data = reader.result.split(',')[1];
 
-        fetch("https://script.google.com/macros/s/AKfycbyM0HlHtLBIIRB9uwt14z2NBBz6z1_YzVimuTVrYTQww0xJxByWnOcmQBacDVN2shx0/exec", { // 🔁 Replace with your Apps Script Web App URL
+        fetch("https://script.google.com/macros/s/AKfycbzdHK6XQQFS64sHW4r96ckJtvtgX4qeiSwvBVjYW4Nc7GNFQ-97DUhm7CVs6UtXi8r9/exec", { // 🔁 Replace with your Apps Script Web App URL
           method: "POST",
           body: new URLSearchParams({
             fileData: base64Data,
             mimeType: file.type,
-            fileName: file.name,
+            fileName: file.name
           }),
         })
         .then(res => res.text())
-        .then(data => {
-          alert("✅ Uploaded to Google Drive!");
-          window.location.href = "shop-details-submitted.html";
+        .then(msg => {
+          alert(msg);
+          // Optionally redirect
+          // window.location.href = "thank-you.html";
         })
         .catch(err => {
-          console.error("Upload failed:", err);
-          alert("❌ Upload failed. Try again.");
+          console.error(err);
+          alert("❌ Upload failed.");
         });
       };
 
       reader.readAsDataURL(file);
     });
   </script>
+
 </body>
 </html>
