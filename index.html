@@ -9,37 +9,31 @@
       background-color: #1a1a1a;
       font-family: 'Segoe UI', sans-serif;
       color: white;
-      margin: 0;
-      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      margin: 0;
     }
-
     form {
       background-color: #000;
       padding: 20px;
       border-radius: 12px;
       width: 92%;
       max-width: 420px;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
       margin-top: auto;
     }
-
     h2 {
       text-align: center;
       color: #00ffcc;
       font-size: 1.5rem;
       margin: 10px 0;
     }
-
     label {
       font-size: 0.95rem;
       display: block;
       margin-bottom: 10px;
     }
-
     input[type="text"],
     input[type="tel"],
     input[type="email"],
@@ -53,11 +47,9 @@
       color: white;
       font-size: 1rem;
     }
-
     input[type="file"] {
       margin-top: 10px;
     }
-
     button {
       width: 100%;
       padding: 12px;
@@ -70,11 +62,9 @@
       font-size: 1rem;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #009977;
     }
-
     footer {
       text-align: center;
       color: #888;
@@ -122,28 +112,35 @@
     document.getElementById('shopForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const formData = {
-        shopName: document.querySelector('[name="shopName"]').value,
-        ownerName: document.querySelector('[name="ownerName"]').value,
-        mobile: document.querySelector('[name="mobile"]').value,
-        email: document.querySelector('[name="email"]').value,
-        location: document.querySelector('[name="location"]').value
-      };
-
-      localStorage.setItem('shopFormData', JSON.stringify(formData));
-
       const fileInput = document.getElementById('qrPhoto');
       const file = fileInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          localStorage.setItem('uploadedImage', e.target.result);
+
+      if (!file) return alert("Please upload a QR photo.");
+
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        const base64Data = reader.result.split(',')[1];
+
+        fetch("https://script.google.com/macros/s/AKfycbyM0HlHtLBIIRB9uwt14z2NBBz6z1_YzVimuTVrYTQww0xJxByWnOcmQBacDVN2shx0/exec", { // 🔁 Replace with your Apps Script Web App URL
+          method: "POST",
+          body: new URLSearchParams({
+            fileData: base64Data,
+            mimeType: file.type,
+            fileName: file.name,
+          }),
+        })
+        .then(res => res.text())
+        .then(data => {
+          alert("✅ Uploaded to Google Drive!");
           window.location.href = "shop-details-submitted.html";
-        };
-        reader.readAsDataURL(file);
-      } else {
-        window.location.href = "shop-details-submitted.html";
-      }
+        })
+        .catch(err => {
+          console.error("Upload failed:", err);
+          alert("❌ Upload failed. Try again.");
+        });
+      };
+
+      reader.readAsDataURL(file);
     });
   </script>
 </body>
