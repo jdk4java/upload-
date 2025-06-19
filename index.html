@@ -34,8 +34,9 @@
       reader.onloadend = function () {
         const base64Data = reader.result.split(',')[1];
 
-        fetch("https://script.google.com/macros/s/AKfycbzdHK6XQQFS64sHW4r96ckJtvtgX4qeiSwvBVjYW4Nc7GNFQ-97DUhm7CVs6UtXi8r9/exec", { // 🔁 Replace with your Apps Script Web App URL
+        fetch("https://script.google.com/macros/s/AKfycbxgzUyZwyYFnsWSaxEPj6XrAOxMIYUCFGgqCW0Pp_HGIEb7HaJLDVStdKfvSPKO1dWx/exec", {
           method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: new URLSearchParams({
             fileData: base64Data,
             mimeType: file.type,
@@ -44,9 +45,7 @@
         })
         .then(res => res.text())
         .then(msg => {
-          alert(msg);
-          // Optionally redirect
-          // window.location.href = "thank-you.html";
+          alert(msg); // Success message from server
         })
         .catch(err => {
           console.error(err);
